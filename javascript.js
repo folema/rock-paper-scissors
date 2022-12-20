@@ -1,46 +1,39 @@
 
-let computerScore=0
-let userScore=0
-
-function startRound(){
-let input=""
-let computerChoice=""
-getInput(input)
-getRandomNumber(2)
-
-function getInput(userInput) {
- return userInput=prompt("Rock, paper scissors"), console.log(userInput), stringToLowerCase(userInput);
-}
-
-function stringToLowerCase(userInput){
-  input= userInput.toLowerCase(), console.log(input)
-  return input;
-}
-
-function getRandomNumber(max){
-  let randomNumber=Math.floor(Math.random() * max)
-  if (randomNumber== 0){ computerChoice="rock";}
-  else if (randomNumber== 1){ computerChoice="paper";}
-  else { computerChoice="scissors";}
-  return;
- }
+const img=document.querySelectorAll("img")
+const textDiv=document.querySelector(".textDiv")
+const roundCounter=document.querySelector(".roundCounter")
+const startRound=((e)=>{
+  
+  text=e.target.id
+  let computerChoice=""
+  if(round<5){
+  getRandomNumber(2)
+  function getRandomNumber(max){
+    let randomNumber=Math.floor(Math.random() * max)
+    if (randomNumber== 0){ computerChoice="rock";}
+    else if (randomNumber== 1){ computerChoice="paper";}
+    else { computerChoice="scissors";}
+    return;
+  }
  
-  if (input=="rock"&& computerChoice=="scissors" || input=="paper" && computerChoice=="rock" || input=="scissors" && computerChoice=="paper"){
-    return userScore++, console.log(`Computer chose ${computerChoice}. User wins. User score ${userScore}, computerscore ${computerScore}`);
+    if (text=="rock"&& computerChoice=="scissors" || text=="paper" && computerChoice=="rock" || text=="scissors" && computerChoice=="paper"){
+    return round++, userScore++, textDiv.textContent=(`Computer chose ${computerChoice}. User wins. User score ${userScore}, computerscore ${computerScore}`),
+    roundCounter.textContent=`Round ${round}`;
   } 
-  else if(input=="scissors" && computerChoice=="rock" || input=="rock" && computerChoice=="paper" || input=="paper" && computerChoice=="scissors"){
-    return computerScore++, console.log(`Computer chose ${computerChoice}. Computer wins. User score ${userScore}, computerscore ${computerScore}`);
+    else if(text=="scissors" && computerChoice=="rock" || text=="rock" && computerChoice=="paper" || text=="paper" && computerChoice=="scissors"){
+    return round++, computerScore++, textDiv.textContent=(`Computer chose ${computerChoice}. Computer wins. User score ${userScore}, computerscore ${computerScore}`),
+    roundCounter.textContent=`Round ${round}`;
   }
-  else{
-    return console.log(`Computer chose ${computerChoice}. Draw. User score ${userScore}, computerscore ${computerScore}`);
-  }          
- }
+    else{
+    return round++, textDiv.textContent=(`Computer chose ${computerChoice}. Draw. User score ${userScore}, computerscore ${computerScore}`),
+    roundCounter.textContent=`Round ${round}`;
+  }}
 
-
-function game(){
-  for (let i=0; i<5; i++){
-    startRound()
-  }
-  return console.log(`Game over. Userscore ${userScore}, Computerscore ${computerScore}`);
-}
-game()
+ else return textDiv.textContent=`Game over. Userscore ${userScore}, computerscore ${computerScore} `,roundCounter.textContent=`Round ${round}`
+})
+ let computerScore=0
+ let userScore=0
+ let text=""
+ let round= 1
+ img.forEach(img=>img.addEventListener(`click`, startRound))
+ roundCounter.textContent=`Round ${round}`
